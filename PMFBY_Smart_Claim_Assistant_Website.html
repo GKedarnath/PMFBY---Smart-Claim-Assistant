@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PMFBY Smart Claim Assistant</title>
+<style>
+:root{--ink:#19332a;--muted:#687970;--green:#246b4a;--pale:#e9f2e3;--paper:#f5f7f1;--line:#e2e9df;--white:#fff;--gold:#fff4dc}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:16px max(calc((100% - 1100px)/2),22px);display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--pale);display:grid;place-items:center;font-size:23px}
+header strong,header small{display:block}header strong{font-size:15px}header small{color:var(--muted);font-size:11px;margin-top:3px}.tag{margin-left:auto;background:var(--gold);border:1px solid #efdfb9;color:#775a21;padding:7px 10px;border-radius:20px;font-size:10px;font-weight:bold;letter-spacing:.08em}
+main{max-width:1100px;margin:auto;padding:42px 22px}.eyebrow{font-size:10px;letter-spacing:.16em;font-weight:bold;color:var(--green);margin:0 0 10px}
+h1{font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-.05em;margin:0}h1 em{font-family:Georgia,serif;color:var(--green);font-weight:normal}.intro{max-width:660px;color:var(--muted);line-height:1.7}
+.warning{display:inline-block;background:var(--gold);border:1px solid #efdfb9;color:#775a21;padding:11px 13px;border-radius:8px;font-size:12px;line-height:1.5}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:28px}.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:23px;box-shadow:0 8px 28px #203b2a08}
+h2{font-size:21px;letter-spacing:-.03em;margin:0 0 20px}form{display:flex;flex-direction:column;gap:14px}label{font-size:12px;font-weight:bold;color:#41584d;display:flex;flex-direction:column;gap:7px}
+input,textarea{border:1px solid var(--line);background:#fbfcfa;border-radius:8px;padding:12px;font:inherit;font-size:13px;color:var(--ink);width:100%}textarea{resize:vertical;line-height:1.5}.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:8px;background:var(--green);color:white;padding:14px;font-size:13px;font-weight:bold;cursor:pointer}button:hover{background:#194e36}
+.agents>div{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:center}.agents>div:last-child{border:0}.agents b{width:29px;height:29px;background:var(--pale);color:var(--green);border-radius:8px;display:grid;place-items:center;font-size:10px}.agents strong,.agents small{display:block}.agents strong{font-size:13px}.agents small{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+#results{margin-top:30px}.hidden{display:none}.results-head{display:flex;justify-content:space-between;align-items:center}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.result p,.result pre{font-size:12px;line-height:1.7;color:#52645a;white-space:pre-wrap;overflow-wrap:anywhere}.result pre{font-family:monospace;font-size:11px}.result h3{font-size:13px;margin:0 0 10px}.trace{margin-top:13px}.trace li{font-size:12px;line-height:2;color:#52645a}footer{margin-top:45px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:11px;line-height:1.7}
+@media(max-width:760px){.layout,.grid{grid-template-columns:1fr}main{padding:28px 15px}header{padding:14px 15px}}@media(max-width:430px){.cols{grid-template-columns:1fr}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="logo">🌾</div><div><strong>PMFBY Smart Claim Assistant</strong><small>Agentic AI · RAG · MCP concept demo</small></div><span class="tag">STATIC WEBSITE</span></header>
+<main>
+<section><p class="eyebrow">CROP INSURANCE CLAIM SUPPORT</p><h1>Understand your next step.<br><em>One claim at a time.</em></h1>
+<p class="intro">A browser-based demonstration of how an AI assistant can retrieve crop-insurance guidance, consult external service tools and explain possible next steps to a farmer.</p>
+<div class="warning">⚠ Educational prototype only. Not an official PMFBY portal. No claim is submitted, verified, approved or rejected.</div></section>
+<section class="layout">
+<div class="panel"><p class="eyebrow">STEP 01</p><h2>Farmer claim details</h2>
+<form id="claimForm">
+<label>Farmer name<input name="name" value="Ramesh" required></label>
+<div class="cols"><label>Location<input name="location" value="Haveri, Karnataka" required></label><label>Crop<input name="crop" value="Paddy" required></label></div>
+<label>Policy reference (optional)<input name="policy" placeholder="Demo reference only"></label>
+<label>Claim reference (optional)<input name="claim" placeholder="Demo reference only"></label>
+<label>Describe the problem<textarea name="issue" rows="4" required>My paddy crop was damaged by unseasonal rain. My insurance claim was rejected because the submitted photographs did not contain GPS location metadata.</textarea></label>
+<button type="submit">Run the Agentic AI demonstration →</button>
+</form></div>
+<div class="panel"><p class="eyebrow">AGENT WORKFLOW</p><h2>How the system works</h2><div class="agents">
+<div><b>01</b><section><strong>Input Agent</strong><small>Understands the farmer's issue.</small></section></div>
+<div><b>02</b><section><strong>RAG Agent</strong><small>Finds relevant guidance in the built-in sample knowledge base.</small></section></div>
+<div><b>03</b><section><strong>MCP Tool Agent</strong><small>Demonstrates weather, policy and insurer service calls with mock data.</small></section></div>
+<div><b>04</b><section><strong>Validation Agent</strong><small>Separates reported facts from verified evidence.</small></section></div>
+<div><b>05</b><section><strong>Decision Agent</strong><small>Selects safe follow-up guidance, not claim eligibility.</small></section></div>
+<div><b>06</b><section><strong>Claim Assistance Agent</strong><small>Prepares a farmer-friendly explanation.</small></section></div>
+</div></div></section>
+<section id="results" class="hidden"><div class="results-head"><div><p class="eyebrow">STEP 02</p><h2>Agent run results</h2></div><span class="tag">SIMULATED</span></div>
+<div class="grid">
+<article class="panel result"><h3>Farmer-facing response</h3><p id="answer"></p></article>
+<article class="panel result"><h3>Validation result</h3><pre id="validation"></pre></article>
+<article class="panel result"><h3>RAG knowledge retrieved</h3><p id="rag"></p></article>
+<article class="panel result"><h3>MCP tool responses</h3><pre id="tools"></pre></article>
+</div><article class="panel trace"><h3>Agent execution trace</h3><ol id="trace"></ol></article></section>
+<footer><strong>PMFBY Smart Claim Assistant</strong><br>Single-file static website · Runs directly in a browser · No terminal or server command required.<br>For real deployment, connect authorized APIs and a secure backend. Do not enter Aadhaar, bank details or other sensitive personal information into this demo. Current PMFBY rules must be checked against official season/state notifications.</footer>
+</main>
+<script>
+const form=document.getElementById('claimForm');
+const guidance=[
+{keys:['photo','gps','geotag','geo-tag','metadata'],title:'Missing or incomplete claim photographs',text:'Preserve the original photographs. Ask the insurer or authorized service centre whether additional evidence or corrected documentation can be accepted when location metadata is missing. Do not alter metadata or present newly created images as original evidence. Requirements depend on the applicable claim category and notification.'},
+{keys:['crop','policy','mismatch'],title:'Crop or policy detail mismatch',text:'Compare the crop declared by the farmer with the insurance application or policy record. Ask the insurer or authorized enrollment channel about the official correction process. Do not assume a verbal statement changes a policy record.'},
+{keys:['late','delay','delayed','intimation'],title:'Delayed damage intimation',text:'Reporting timelines depend on the cause of loss, claim category, season notification and applicable instructions. Check the current official notification and contact the insurer promptly. Do not assume a late report will be accepted.'},
+{keys:['land','survey','name','record'],title:'Farmer or land record mismatch',text:'Compare official land records and insurance application records. Refer corrections to the authorized land-record office or insurer. Do not edit government records or infer ownership.'},
+{keys:['status','tracking','track'],title:'Claim status follow-up',text:'Use the insurer authorized tracking channel and claim reference. Explain only a status returned by that service. If unavailable, say status could not be verified.'}
+];
+form.addEventListener('submit',e=>{
+e.preventDefault();const d=Object.fromEntries(new FormData(form).entries());const issue=d.issue.toLowerCase();
+const hit=guidance.find(g=>g.keys.some(k=>issue.includes(k)))||guidance[0];
+const trace=[
+'Input Agent: captured farmer issue and claim context.',
+'RAG Agent: searched the built-in sample PMFBY knowledge base; matched "'+hit.title+'".',
+'MCP Tool Agent: called mock weather, policy and insurer adapters (no live API connection).',
+'Validation Agent: checked what is reported versus what is actually verified.',
+'Decision Agent: selected safe follow-up guidance; did not decide eligibility.',
+'Claim Assistance Agent: generated a farmer-friendly response.'
+];
+document.getElementById('answer').textContent=`Namaskara ${d.name||'Farmer'}, your issue has been reviewed by this browser-based demonstration. ${hit.text} Keep your policy and claim references ready. Weather information alone does not prove crop loss. This demo has not verified your policy, claim status or photograph metadata, and has not submitted or approved a claim.`;
+document.getElementById('validation').textContent=JSON.stringify({
+reported_issue:hit.title,
+policy_verified:false,
+claim_status_verified:false,
+photo_metadata_inspected:false,
+live_external_services_connected:false,
+evidence_complete:false,
+decision:'Further evidence and insurer confirmation required.'
+},null,2);
+document.getElementById('rag').textContent='Retrieved sample knowledge section: '+hit.title+'\\n\\n'+hit.text+'\\n\\nSource: Built-in illustrative knowledge base; not an official or complete PMFBY rulebook.';
+document.getElementById('tools').textContent=JSON.stringify({
+weather:{simulation:true,location:d.location,result:'Mock response: rainfall context would be retrieved here.',note:'Weather does not prove crop loss.'},
+policy:{simulation:true,reference_supplied:!!d.policy,result:'No live policy record verified.'},
+insurer:{simulation:true,claim_reference_supplied:!!d.claim,result:'No live insurer rejection reason or claim status fetched.'}
+},null,2);
+const list=document.getElementById('trace');list.replaceChildren();trace.forEach(t=>{const li=document.createElement('li');li.textContent=t;list.appendChild(li)});
+const results=document.getElementById('results');results.classList.remove('hidden');results.scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
+</body></html>
