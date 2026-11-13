@@ -1,0 +1,928 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMFBY Smart Claim Assistant</title>
+
+<style>
+:root {
+  --green: #176b45;
+  --green-dark: #104b32;
+  --green-light: #eaf5ee;
+  --gold: #e6b84a;
+  --background: #f4f7f5;
+  --text: #24332b;
+  --muted: #68776e;
+  --border: #dce6df;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Kannada", sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--green-dark);
+  color: white;
+  padding: 22px 6%;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: white;
+  color: var(--green);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+}
+
+.brand h1 {
+  font-size: 21px;
+  margin: 0;
+}
+
+.brand p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: .85;
+}
+
+.status {
+  background: #fff2d5;
+  color: #77530b;
+  border-radius: 30px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #e8f4ec, #ffffff);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  margin-bottom: 25px;
+}
+
+.hero h2 {
+  color: var(--green-dark);
+  font-size: 29px;
+  margin: 0 0 10px;
+}
+
+.hero p {
+  max-width: 780px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.notice {
+  background: #fff8e8;
+  border: 1px solid #f0dca9;
+  border-left: 5px solid var(--gold);
+  padding: 14px 17px;
+  border-radius: 9px;
+  margin: 20px 0;
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 23px;
+  margin-bottom: 22px;
+  box-shadow: 0 3px 12px rgba(20, 60, 35, .04);
+}
+
+.card h3 {
+  margin: 0 0 15px;
+  color: var(--green-dark);
+  font-size: 19px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  font-size: 13px;
+  margin: 15px 0 7px;
+}
+
+textarea,
+select,
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font: inherit;
+  background: white;
+  color: var(--text);
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+textarea:focus,
+select:focus,
+input:focus {
+  outline: 2px solid #8bc4a2;
+  border-color: var(--green);
+}
+
+button {
+  border: none;
+  border-radius: 9px;
+  padding: 11px 17px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+  transition: .2s;
+}
+
+button:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: var(--green);
+  color: white;
+}
+
+.secondary {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border: 1px solid #cfe4d5;
+}
+
+.warning-button {
+  background: #fff2d5;
+  color: #77530b;
+}
+
+.danger-button {
+  background: #fcebea;
+  color: #9b3530;
+}
+
+.button-row {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.result {
+  background: #f7faf8;
+  border: 1px dashed #a8c5b1;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 17px;
+  min-height: 65px;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green-dark);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 3px 3px 3px 0;
+}
+
+.feature {
+  border-bottom: 1px solid var(--border);
+  padding: 13px 0;
+}
+
+.feature:last-child {
+  border-bottom: none;
+}
+
+.feature strong {
+  color: var(--green-dark);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.feature p {
+  margin: 0;
+}
+
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  margin: 14px 0;
+}
+
+.check-row input {
+  margin-top: 4px;
+}
+
+.architecture {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.architecture-item {
+  text-align: center;
+  padding: 15px 9px;
+  background: #f4f8f5;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.architecture-item .symbol {
+  font-size: 25px;
+  margin-bottom: 7px;
+}
+
+.architecture-item strong {
+  display: block;
+  color: var(--green-dark);
+  font-size: 13px;
+}
+
+.architecture-item small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.file-info {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  background: var(--green-dark);
+  color: white;
+  text-align: center;
+  padding: 22px;
+  margin-top: 35px;
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero {
+    padding: 23px;
+  }
+
+  .hero h2 {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 450px) {
+  .architecture {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .button-row button {
+    flex: 1 1 auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="brand">
+      <div class="brand-icon">🌾</div>
+      <div>
+        <h1>PMFBY Smart Claim Assistant</h1>
+        <p>Farmer Support Interface</p>
+      </div>
+    </div>
+
+    <div class="status" id="connectionStatus">
+      FRONTEND PREVIEW · NOT CONNECTED
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h2 id="heroTitle">Your Crop Insurance Support Assistant</h2>
+    <p id="heroDescription">
+      Describe your crop-insurance concern in your own words.
+      This interface is designed to support farmers through an accessible,
+      multilingual and responsible AI system.
+    </p>
+  </section>
+
+  <div class="notice" id="previewNotice">
+    <strong>Frontend-only demonstration:</strong>
+    No live AI analysis, PMFBY document retrieval, claim verification,
+    government connection or official claim submission is available here.
+    Do not treat this page as an official PMFBY service.
+  </div>
+
+  <div class="grid">
+
+    <!-- MAIN ASSISTANT -->
+    <section>
+
+      <div class="card">
+        <h3 id="assistantTitle">Describe Your Concern</h3>
+
+        <label for="language" id="languageLabel">
+          Select your preferred language
+        </label>
+
+        <select id="language" onchange="changeLanguage()">
+          <option value="en">English</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        </select>
+
+        <label for="farmerMessage" id="messageLabel">
+          Describe your concern
+        </label>
+
+        <textarea
+          id="farmerMessage"
+          placeholder="Write your concern here in your own words..."
+        ></textarea>
+
+        <div class="button-row">
+          <button class="secondary" onclick="startVoiceInput()" id="voiceButton">
+            🎙 Voice Input
+          </button>
+
+          <button class="secondary" onclick="readMessage()" id="speakButton">
+            🔊 Read Text
+          </button>
+
+          <button class="secondary" onclick="translatePreview()" id="translateButton">
+            Translate Preview
+          </button>
+        </div>
+
+        <label for="additionalContext" id="contextLabel">
+          Additional information (optional)
+        </label>
+
+        <textarea
+          id="additionalContext"
+          style="min-height:80px"
+          placeholder="Add any additional information you want to include..."
+        ></textarea>
+
+        <div class="check-row">
+          <input type="checkbox" id="consent">
+          <label for="consent" id="consentLabel" style="margin:0;font-weight:normal">
+            I understand this is a frontend demonstration and consent to using
+            the information entered for this local interface preview.
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" onclick="analyzePreview()" id="analyzeButton">
+            Analyse Concern
+          </button>
+
+          <button class="danger-button" onclick="clearForm()" id="clearButton">
+            Clear
+          </button>
+        </div>
+
+        <div class="result" id="assistantResult" aria-live="polite">
+          Your preview message will appear here. No AI analysis is performed.
+        </div>
+      </div>
+
+      <!-- DOCUMENT UPLOAD -->
+      <div class="card">
+        <h3 id="documentTitle">Document Selection</h3>
+
+        <p id="documentDescription">
+          Select a document if you want to include it in a future connected
+          version of the assistant.
+        </p>
+
+        <label for="documentUpload" id="uploadLabel">
+          Choose a document
+        </label>
+
+        <input
+          type="file"
+          id="documentUpload"
+          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          onchange="showFileDetails()"
+        >
+
+        <div class="file-info" id="fileInfo">
+          No document selected.
+        </div>
+
+        <div class="notice">
+          Selecting a file does not upload, read, extract or verify its contents.
+        </div>
+      </div>
+
+      <!-- HUMAN IN THE LOOP -->
+      <div class="card">
+        <h3 id="humanTitle">Human-in-the-Loop Review</h3>
+
+        <p id="humanDescription">
+          A future connected system should route uncertain, disputed or
+          high-impact cases to an authorised human reviewer.
+        </p>
+
+        <label for="reviewReason" id="reviewLabel">
+          Explain why human review may be needed
+        </label>
+
+        <textarea
+          id="reviewReason"
+          style="min-height:85px"
+          placeholder="Enter your review request..."
+        ></textarea>
+
+        <div class="check-row">
+          <input type="checkbox" id="humanConsent">
+          <label for="humanConsent" style="margin:0;font-weight:normal">
+            I understand that this request will not be sent to an official
+            or human reviewer from this demonstration.
+          </label>
+        </div>
+
+        <button class="warning-button" onclick="prepareReview()" id="reviewButton">
+          Prepare Review Request
+        </button>
+
+        <div class="result" id="reviewResult" aria-live="polite">
+          No review request prepared.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDE -->
+    <aside>
+
+      <div class="card">
+        <h3 id="responsibleTitle">Responsible AI Principles</h3>
+
+        <div class="feature">
+          <strong>✓ Transparency</strong>
+          <p id="transparencyText">
+            A connected system should identify the documents and sources
+            supporting its responses.
+          </p>
+        </div>
+
+        <div class="feature">
+          <strong>✓ No fabricated information</strong>
+          <p id="accuracyText">
+            The assistant must not invent claim status, eligibility,
+            deadlines, weather information or official decisions.
+          </p>
+        </div>
+
+        <div class="feature">
+          <strong>✓ Human oversight</strong>
+          <p id="oversightText">
+            Important, unclear or disputed decisions must be reviewed
+            by authorised people.
+          </p>
+        </div>
+
+        <div class="feature">
+          <strong>✓ Privacy and consent</strong>
+          <p id="privacyText">
+            Personal information should only be collected and used
+            for a clearly explained purpose.
+          </p>
+        </div>
+
+        <div class="feature">
+          <strong>✓ Fairness and accessibility</strong>
+          <p id="fairnessText">
+            The design aims to support different languages, literacy
+            levels and ways of communicating.
+          </p>
+        </div>
+
+        <div class="feature">
+          <strong>✓ Uncertainty disclosure</strong>
+          <p id="uncertaintyText">
+            Missing, outdated or conflicting information must be disclosed
+            instead of being presented as fact.
+          </p>
+        </div>
+      </div>
+
+      <!-- RAG AND MCP -->
+      <div class="card">
+        <h3 id="architectureTitle">Agentic AI Architecture</h3>
+
+        <p id="architectureDescription">
+          These are intended components of a future connected system.
+          They are not active in this frontend-only demonstration.
+        </p>
+
+        <div class="architecture">
+
+          <div class="architecture-item">
+            <div class="symbol">📚</div>
+            <strong>RAG</strong>
+            <small>Verified document retrieval</small>
+          </div>
+
+          <div class="architecture-item">
+            <div class="symbol">🔗</div>
+            <strong>MCP</strong>
+            <small>Authorised external tools</small>
+          </div>
+
+          <div class="architecture-item">
+            <div class="symbol">🛡️</div>
+            <strong>Responsible AI</strong>
+            <small>Safety and transparency</small>
+          </div>
+
+          <div class="architecture-item">
+            <div class="symbol">👨‍💼</div>
+            <strong>HITL</strong>
+            <small>Human oversight</small>
+          </div>
+
+        </div>
+
+        <div class="notice">
+          <strong>Not connected:</strong>
+          No knowledge database, external MCP service, weather provider,
+          insurer system or official PMFBY portal is accessed.
+        </div>
+      </div>
+
+      <!-- LIMITATIONS -->
+      <div class="card">
+        <h3 id="limitationsTitle">What This Version Can Do</h3>
+
+        <div class="feature">
+          <strong>Available in this frontend</strong>
+          <p>Enter text, select a language, use supported browser voice
+          features, select a document, and prepare a local review request.</p>
+        </div>
+
+        <div class="feature">
+          <strong>Not available in this frontend</strong>
+          <p>AI-generated answers, live translation, RAG retrieval,
+          MCP tool calls, claim tracking, document extraction,
+          official verification and claim submission.</p>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+</main>
+
+<footer>
+  PMFBY Smart Claim Assistant · Frontend Demonstration
+  <br>
+  Not an official government portal. This interface does not submit,
+  approve, reject or verify insurance claims.
+</footer>
+
+<script>
+const translations = {
+  en: {
+    heroTitle: "Your Crop Insurance Support Assistant",
+    heroDescription:
+      "Describe your crop-insurance concern in your own words. This interface is designed to support farmers through an accessible, multilingual and responsible AI system.",
+    assistantTitle: "Describe Your Concern",
+    languageLabel: "Select your preferred language",
+    messageLabel: "Describe your concern",
+    voiceButton: "🎙 Voice Input",
+    speakButton: "🔊 Read Text",
+    translateButton: "Translate Preview",
+    contextLabel: "Additional information (optional)",
+    consentLabel:
+      "I understand this is a frontend demonstration and consent to using the information entered for this local interface preview.",
+    analyzeButton: "Analyse Concern",
+    clearButton: "Clear",
+    documentTitle: "Document Selection",
+    documentDescription:
+      "Select a document if you want to include it in a future connected version of the assistant.",
+    uploadLabel: "Choose a document",
+    humanTitle: "Human-in-the-Loop Review",
+    humanDescription:
+      "A future connected system should route uncertain, disputed or high-impact cases to an authorised human reviewer.",
+    reviewLabel: "Explain why human review may be needed",
+    reviewButton: "Prepare Review Request",
+    responsibleTitle: "Responsible AI Principles",
+    transparencyText:
+      "A connected system should identify the documents and sources supporting its responses.",
+    accuracyText:
+      "The assistant must not invent claim status, eligibility, deadlines, weather information or official decisions.",
+    oversightText:
+      "Important, unclear or disputed decisions must be reviewed by authorised people.",
+    privacyText:
+      "Personal information should only be collected and used for a clearly explained purpose.",
+    fairnessText:
+      "The design aims to support different languages, literacy levels and ways of communicating.",
+    uncertaintyText:
+      "Missing, outdated or conflicting information must be disclosed instead of being presented as fact.",
+    architectureTitle: "Agentic AI Architecture",
+    architectureDescription:
+      "These are intended components of a future connected system. They are not active in this frontend-only demonstration.",
+    limitationsTitle: "What This Version Can Do"
+  },
+
+  kn: {
+    heroTitle: "ನಿಮ್ಮ ಬೆಳೆ ವಿಮೆ ಸಹಾಯ ಸಹಾಯಕ",
+    heroDescription:
+      "ನಿಮ್ಮ ಬೆಳೆ ವಿಮೆ ಸಮಸ್ಯೆಯನ್ನು ನಿಮ್ಮದೇ ಪದಗಳಲ್ಲಿ ವಿವರಿಸಿ. ರೈತರಿಗೆ ಸುಲಭವಾಗಿ ಬಳಸಬಹುದಾದ ಬಹುಭಾಷಾ ವ್ಯವಸ್ಥೆಯ ವಿನ್ಯಾಸ ಇದು.",
+    assistantTitle: "ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ",
+    languageLabel: "ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    messageLabel: "ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ",
+    voiceButton: "🎙 ಧ್ವನಿ ಇನ್‌ಪುಟ್",
+    speakButton: "🔊 ಪಠ್ಯವನ್ನು ಓದಿ",
+    translateButton: "ಅನುವಾದ ಪೂರ್ವವೀಕ್ಷಣೆ",
+    contextLabel: "ಹೆಚ್ಚುವರಿ ಮಾಹಿತಿ (ಐಚ್ಛಿಕ)",
+    consentLabel:
+      "ಇದು ಮುಂಭಾಗದ ವಿನ್ಯಾಸದ ಪ್ರದರ್ಶನ ಎಂಬುದನ್ನು ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ.",
+    analyzeButton: "ಸಮಸ್ಯೆಯನ್ನು ವಿಶ್ಲೇಷಿಸಿ",
+    clearButton: "ಅಳಿಸಿ",
+    documentTitle: "ದಾಖಲೆ ಆಯ್ಕೆ",
+    documentDescription:
+      "ಭವಿಷ್ಯದ ಸಂಪರ್ಕಿತ ವ್ಯವಸ್ಥೆಯಲ್ಲಿ ಬಳಸಲು ದಾಖಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಬಹುದು.",
+    uploadLabel: "ದಾಖಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    humanTitle: "ಮಾನವ ಪರಿಶೀಲನೆ",
+    humanDescription:
+      "ಅನಿಶ್ಚಿತ ಅಥವಾ ವಿವಾದಿತ ಪ್ರಕರಣಗಳನ್ನು ಅಧಿಕೃತ ಮಾನವ ಪರಿಶೀಲಕರಿಗೆ ಕಳುಹಿಸುವ ವ್ಯವಸ್ಥೆಯನ್ನು ಭವಿಷ್ಯದಲ್ಲಿ ರೂಪಿಸಬಹುದು.",
+    reviewLabel: "ಮಾನವ ಪರಿಶೀಲನೆ ಏಕೆ ಬೇಕು ಎಂಬುದನ್ನು ವಿವರಿಸಿ",
+    reviewButton: "ಪರಿಶೀಲನಾ ವಿನಂತಿಯನ್ನು ಸಿದ್ಧಪಡಿಸಿ",
+    responsibleTitle: "ಜವಾಬ್ದಾರಿಯುತ AI ತತ್ವಗಳು",
+    transparencyText:
+      "ಸಂಪರ್ಕಿತ ವ್ಯವಸ್ಥೆಯು ಉತ್ತರಗಳಿಗೆ ಆಧಾರವಾದ ದಾಖಲೆಗಳು ಮತ್ತು ಮೂಲಗಳನ್ನು ತೋರಿಸಬೇಕು.",
+    accuracyText:
+      "ಹಕ್ಕು ಸ್ಥಿತಿ, ಅರ್ಹತೆ, ಗಡುವು ಅಥವಾ ಅಧಿಕೃತ ನಿರ್ಧಾರಗಳನ್ನು AI ಕಲ್ಪಿಸಬಾರದು.",
+    oversightText:
+      "ಮುಖ್ಯ ಮತ್ತು ವಿವಾದಿತ ನಿರ್ಧಾರಗಳನ್ನು ಅಧಿಕೃತ ವ್ಯಕ್ತಿಗಳು ಪರಿಶೀಲಿಸಬೇಕು.",
+    privacyText:
+      "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿಯನ್ನು ಸ್ಪಷ್ಟ ಉದ್ದೇಶಕ್ಕಾಗಿ ಮಾತ್ರ ಬಳಸಬೇಕು.",
+    fairnessText:
+      "ವಿವಿಧ ಭಾಷೆ ಮತ್ತು ಸಂವಹನ ವಿಧಾನಗಳನ್ನು ಬೆಂಬಲಿಸುವಂತೆ ವಿನ್ಯಾಸಗೊಳಿಸಬೇಕು.",
+    uncertaintyText:
+      "ಮಾಹಿತಿ ಇಲ್ಲದಿದ್ದರೆ ಅಥವಾ ವಿರೋಧಾಭಾಸವಿದ್ದರೆ ಅದನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ತಿಳಿಸಬೇಕು.",
+    architectureTitle: "ಏಜೆಂಟಿಕ್ AI ವಿನ್ಯಾಸ",
+    architectureDescription:
+      "ಇವು ಭವಿಷ್ಯದ ಸಂಪರ್ಕಿತ ವ್ಯವಸ್ಥೆಯ ಉದ್ದೇಶಿತ ಭಾಗಗಳು. ಈ ಪ್ರದರ್ಶನದಲ್ಲಿ ಇವು ಕಾರ್ಯನಿರ್ವಹಿಸುವುದಿಲ್ಲ.",
+    limitationsTitle: "ಈ ಆವೃತ್ತಿಯ ಸಾಮರ್ಥ್ಯಗಳು"
+  }
+};
+
+function changeLanguage() {
+  const lang = document.getElementById("language").value;
+  const t = translations[lang];
+
+  Object.keys(t).forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = t[id];
+  });
+
+  document.documentElement.lang = lang === "kn" ? "kn" : "en";
+
+  document.getElementById("farmerMessage").placeholder =
+    lang === "kn"
+      ? "ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ಇಲ್ಲಿ ನಿಮ್ಮದೇ ಪದಗಳಲ್ಲಿ ಬರೆಯಿರಿ..."
+      : "Write your concern here in your own words...";
+
+  document.getElementById("additionalContext").placeholder =
+    lang === "kn"
+      ? "ಹೆಚ್ಚುವರಿ ಮಾಹಿತಿಯನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ..."
+      : "Add any additional information you want to include...";
+
+  document.getElementById("reviewReason").placeholder =
+    lang === "kn"
+      ? "ನಿಮ್ಮ ಪರಿಶೀಲನಾ ವಿನಂತಿಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
+      : "Enter your review request...";
+}
+
+function analyzePreview() {
+  const consent = document.getElementById("consent").checked;
+  const message = document.getElementById("farmerMessage").value.trim();
+  const lang = document.getElementById("language").value;
+
+  const output = document.getElementById("assistantResult");
+
+  if (!consent) {
+    output.textContent = lang === "kn"
+      ? "ಮುಂದುವರಿಯಲು ದಯವಿಟ್ಟು ಒಪ್ಪಿಗೆಯನ್ನು ನೀಡಿ."
+      : "Please provide consent before continuing.";
+    return;
+  }
+
+  if (!message) {
+    output.textContent = lang === "kn"
+      ? "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ನಮೂದಿಸಿ."
+      : "Please enter your concern first.";
+    return;
+  }
+
+  output.textContent = lang === "kn"
+    ? "ಇದು ಮುಂಭಾಗದ ಪ್ರದರ್ಶನ ಮಾತ್ರ. ನಿಮ್ಮ ಸಂದೇಶವನ್ನು AI ಮಾದರಿಗೆ ಕಳುಹಿಸಲಾಗಿಲ್ಲ. ಯಾವುದೇ PMFBY ದಾಖಲೆಗಳನ್ನು ಹುಡುಕಲಾಗಿಲ್ಲ ಮತ್ತು ಯಾವುದೇ ಅಧಿಕೃತ ನಿರ್ಧಾರವನ್ನು ನೀಡಲಾಗಿಲ್ಲ. ನೈಜ ವಿಶ್ಲೇಷಣೆಗೆ ಪರಿಶೀಲಿತ ದಾಖಲೆಗಳು ಮತ್ತು ಸಂಪರ್ಕಿತ AI ವ್ಯವಸ್ಥೆ ಅಗತ್ಯವಿದೆ."
+    : "Frontend preview only. Your message has not been sent to an AI model. No PMFBY documents have been retrieved and no official decision has been made. Actual analysis requires verified documents and a connected AI system.";
+}
+
+function clearForm() {
+  document.getElementById("farmerMessage").value = "";
+  document.getElementById("additionalContext").value = "";
+  document.getElementById("reviewReason").value = "";
+  document.getElementById("consent").checked = false;
+  document.getElementById("humanConsent").checked = false;
+  document.getElementById("documentUpload").value = "";
+  document.getElementById("fileInfo").textContent = "No document selected.";
+  document.getElementById("assistantResult").textContent =
+    "Your preview message will appear here. No AI analysis is performed.";
+  document.getElementById("reviewResult").textContent =
+    "No review request prepared.";
+}
+
+function showFileDetails() {
+  const file = document.getElementById("documentUpload").files[0];
+  const info = document.getElementById("fileInfo");
+
+  if (!file) {
+    info.textContent = "No document selected.";
+    return;
+  }
+
+  info.textContent =
+    "Selected file: " + file.name +
+    " | Type: " + (file.type || "Unknown") +
+    " | Size: " + (file.size / 1024).toFixed(1) + " KB. " +
+    "This file has not been uploaded or analysed.";
+}
+
+function prepareReview() {
+  const reason = document.getElementById("reviewReason").value.trim();
+  const consent = document.getElementById("humanConsent").checked;
+  const lang = document.getElementById("language").value;
+  const output = document.getElementById("reviewResult");
+
+  if (!reason) {
+    output.textContent = lang === "kn"
+      ? "ದಯವಿಟ್ಟು ಪರಿಶೀಲನೆಯ ಕಾರಣವನ್ನು ನಮೂದಿಸಿ."
+      : "Please enter a reason for human review.";
+    return;
+  }
+
+  if (!consent) {
+    output.textContent = lang === "kn"
+      ? "ದಯವಿಟ್ಟು ಮೊದಲು ಒಪ್ಪಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಿ."
+      : "Please confirm the acknowledgement first.";
+    return;
+  }
+
+  output.textContent = lang === "kn"
+    ? "ನಿಮ್ಮ ಪರಿಶೀಲನಾ ವಿನಂತಿಯನ್ನು ಈ ಪುಟದಲ್ಲಿ ಸಿದ್ಧಪಡಿಸಲಾಗಿದೆ. ಇದು ಯಾವುದೇ ಅಧಿಕಾರಿ ಅಥವಾ ಸಂಸ್ಥೆಗೆ ಕಳುಹಿಸಲಾಗಿಲ್ಲ."
+    : "Your review request has been prepared in this page. It has not been sent to any officer or organisation.";
+}
+
+function translatePreview() {
+  const lang = document.getElementById("language").value;
+  const output = document.getElementById("assistantResult");
+
+  output.textContent = lang === "kn"
+    ? "ಕನ್ನಡ ಇಂಟರ್ಫೇಸ್ ಪೂರ್ವವೀಕ್ಷಣೆ ಸಕ್ರಿಯವಾಗಿದೆ. ನಿಮ್ಮ ಸ್ವಂತ ಸಂದೇಶವನ್ನು AI ಮೂಲಕ ಅನುವಾದಿಸಲಾಗಿಲ್ಲ. ನೈಜ ಅನುವಾದ ಸೇವೆ ಸಂಪರ್ಕಿತವಾಗಿಲ್ಲ."
+    : "English interface preview is active. Your message has not been translated by AI. No live translation service is connected.";
+}
+
+function startVoiceInput() {
+  const lang = document.getElementById("language").value;
+  const output = document.getElementById("assistantResult");
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    output.textContent =
+      "Speech recognition is not supported by this browser. You can type your message instead.";
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = lang === "kn" ? "kn-IN" : "en-IN";
+  recognition.interimResults = false;
+
+  recognition.onresult = event => {
+    const transcript = event.results[0][0].transcript;
+    const field = document.getElementById("farmerMessage");
+    field.value = field.value
+      ? field.value + " " + transcript
+      : transcript;
+  };
+
+  recognition.onerror = () => {
+    output.textContent =
+      "Voice input could not be completed. Please type your message instead.";
+  };
+
+  recognition.start();
+}
+
+function readMessage() {
+  const text = document.getElementById("farmerMessage").value.trim();
+  const lang = document.getElementById("language").value;
+
+  if (!text) {
+    document.getElementById("assistantResult").textContent =
+      "Enter some text before using read aloud.";
+    return;
+  }
+
+  if (!("speechSynthesis" in window)) {
+    document.getElementById("assistantResult").textContent =
+      "Text-to-speech is not supported by this browser.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang === "kn" ? "kn-IN" : "en-IN";
+
+  window.speechSynthesis.speak(utterance);
+}
+</script>
+
+</body>
+</html>
